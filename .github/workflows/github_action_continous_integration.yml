@@ -41,7 +41,7 @@ jobs:
 #         password: ${{ secrets.PASSWORD }}
 #         port: ${{ secrets.PORT }}
 #         script: |
-#           git clone https://github.com/Sonal0409/DevOps-Capstone-Project.git
+#           git clone https://github.com/JJ-GIT-DEV/simplilearn_devops_capstone_project.git
 #           cd DevOps-Capstone-Project
 #           helm list -A
 #           helm install mavenbuild-dev ./webapp
