@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: capstone
+ name: simpli_capstone_project
 spec:
  replicas: 3
  selector:
   matchLabels:
-   app: capstone
+   app: simpli_capstone_project
  template:
   metadata:
    labels:
-    app: capstone
+    app: simpli_capstone_project
   spec:
   containers:
    name: c1
-   image: sonal04/capstoneimage
+   image: jjdockerdev/docker-image

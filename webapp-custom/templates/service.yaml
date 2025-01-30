@@ -9,4 +9,4 @@ spec:
   - targetPort: 8080
     port: 8080
  selector:
-  app: capstone
+  app: simpli_capstone_project
