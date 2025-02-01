@@ -16,8 +16,9 @@ variable "azs" {
 
 provider "aws" {
     region = "us-east-1"
-    access_key = "AKIA4AQYMM7VIRHEWXWA"
-    secret_key = "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"
+    a_key = "***"
+    s_key = "***"
+
 } 
 
 # VPC
