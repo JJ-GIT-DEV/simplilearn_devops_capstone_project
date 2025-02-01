@@ -16,8 +16,6 @@ variable "azs" {
 
 provider "aws" {
     region = "us-east-1"
-    a_key = "***"
-    s_key = "***"
 
 } 
 
