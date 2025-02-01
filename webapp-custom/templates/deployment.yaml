@@ -13,6 +13,6 @@ spec:
    labels:
     app: simpli_capstone_project
   spec:
-  containers:
-   name: c1
-   image: jjdockerdev/docker-image
+   containers:
+    - name: c1
+      image: jjdockerdev/docker-image
