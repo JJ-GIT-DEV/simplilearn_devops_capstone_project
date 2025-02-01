@@ -14,11 +14,11 @@ variable "azs" {
         default = "us-east-1a"
 }
 
-
 provider "aws" {
-        region = var.aws_region  
-}
-
+    region = "us-east-1"
+    access_key = "AKIA4AQYMM7VIRHEWXWA"
+    secret_key = "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"
+} 
 
 # VPC
 resource "aws_vpc" "terra_vpc" {
@@ -93,22 +93,9 @@ resource "aws_security_group_rule" "egress_access" {
   security_group_id = "${aws_security_group.my_security_group.id}"
 }
 
-data "aws_ami" "latest-ubuntu" {
-  most_recent = true
-  filter {
-      name   = "name"
-      values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230517"]
-  }
-
-  filter {
-      name   = "virtualization-type"
-      values = ["hvm"]
-  }
-}
-
 resource "aws_launch_configuration" "aws_autoscale_conf" {
   name          = "web_config"
-  image_id      = "${data.aws_ami.latest-ubuntu.id}"
+  image_id      = "ami-0e1bed4f06a3b463d"
   instance_type = "t2.micro"
   security_groups =  [ "${aws_security_group.my_security_group.id}" ]
 }

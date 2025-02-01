@@ -33,17 +33,17 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.appName }}:latest
 
-#      - name: Executing Kubectl command on Kubernetes Server Remotely
-#        uses: appleboy/ssh-action@v0.1.10
-#        with:
-#         host: ${{ secrets.HOST }}
-#         username: ${{ secrets.USERNAME }}
-#         password: ${{ secrets.PASSWORD }}
-#         port: ${{ secrets.PORT }}
-#         script: |
-#           git clone https://github.com/JJ-GIT-DEV/simplilearn_devops_capstone_project.git
-#           cd DevOps-Capstone-Project
-#           helm list -A
-#           helm install mavenbuild-dev ./webapp
-#           helm list -A
-#           kubectl get all
+      - name: Executing Kubectl command on Kubernetes Server Remotely
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+         host: ${{ secrets.HOST }}
+         username: ${{ secrets.USERNAME }}
+         password: ${{ secrets.PASSWORD }}
+         port: ${{ secrets.PORT }}
+         script: |
+           git clone https://github.com/JJ-GIT-DEV/simplilearn_devops_capstone_project.git
+           cd simplilearn_devops_capstone_project
+           helm list -A
+           helm install mavenbuild-dev ./webapp-clustom
+           helm list -A
+           kubectl get all
