@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: simpli_capstone_project
+ name: capstone
 spec:
  replicas: 3
  selector:
   matchLabels:
-   app: simpli_capstone_project
+   app: capstone
  template:
   metadata:
    labels:
-    app: simpli_capstone_project
+    app: capstone
   spec:
    containers:
     - name: c1
