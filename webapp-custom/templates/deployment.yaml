@@ -14,5 +14,14 @@ spec:
     app: capstone
   spec:
    containers:
-    - name: c1
+    - name: capstone
       image: jjdockerdev/docker-image
+      ports:
+        - containerPort: 8090
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 600Mi
+          requests:
+            cpu: 500m
+            memory: 300Mi

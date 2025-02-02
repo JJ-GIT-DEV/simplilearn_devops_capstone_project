@@ -16,7 +16,8 @@ variable "azs" {
 
 provider "aws" {
     region = "us-east-1"
-
+    access_key = "xxx"
+    secret_key = "xxx"
 } 
 
 # VPC
@@ -90,6 +91,19 @@ resource "aws_security_group_rule" "egress_access" {
   protocol = "tcp"
   cidr_blocks = [ "0.0.0.0/0" ]
   security_group_id = "${aws_security_group.my_security_group.id}"
+}
+
+data "aws_ami" "latest-ubuntu" {
+  most_recent = true
+  filter {
+      name   = "name"
+      values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230517"]
+  }
+
+  filter {
+      name   = "virtualization-type"
+      values = ["hvm"]
+  }
 }
 
 resource "aws_launch_configuration" "aws_autoscale_conf" {
