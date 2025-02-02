@@ -263,11 +263,13 @@ ssh root@localhost "date"
 ![github_action_secrets_variables_with_ec2](images/github_action_secrets_variables_with_ec2.png)
 
 
+### the k8s service are created 
+
+![ec2_k8s_service_create](images/ec2_k8s_service_create.png)
 
 
 
-
-
+![k8s_sercie_webapp-custom_running](images/k8s_sercie_webapp-custom_running.png)
 
 
 
