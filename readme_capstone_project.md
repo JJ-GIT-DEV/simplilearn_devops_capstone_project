@@ -1,9 +1,8 @@
-# Simplilearn - DevOps - Capstone Project Problem Statement (Jürgen Vorndran)
-========================================
+# Simplilearn - DevOps - Capstone Project - Perform, Build, and Deploy Automation to Docker Container (Jürgen Vorndran) 
 
 <strong>Project:</strong>
 
-The goal is to utilize Ansible Configuration Management and CI/CD pipelines to automate the hosting of Docker containers on a Docker host. The objective is to streamline deployment, ensure scalability, and simplify maintenance for efficient container management.
+The goal is to utilize CI/CD pipelines to automate the hosting of Docker containers on a Docker host. The objective is to streamline deployment, ensure scalability, and simplify maintenance for efficient container management.
 
 
 <strong>Expected Deliverables:</strong>
@@ -16,11 +15,11 @@ The goal is to utilize Ansible Configuration Management and CI/CD pipelines to a
 - Kubernetes: Kubernetes Cluster for deploying Containers
 
 -----------------------------------------------------
-# Creating a GitHub Action for Workflow Building Docker Container
+# Creating a GitHub Action for Workflow Building Docker Container with a Spring Boot Project
 
-Preparing the source code and designing the build process along with Dockerfile preparation 
+Preparing the source code and designing the build process along with Dockerfile preparation. 
 
-We will using an existing Spring Boot project with the source code from github repository https://github.com/Sonal0409/Vodafone-DevOps-CapstoneProject
+We will using an existing Spring Boot Project with the source code from github repository https://github.com/Sonal0409/Vodafone-DevOps-CapstoneProject
 
 ### Creating a Dockerfile for the Spring Boot Project
 First, we’ll need to create a Dockerfile in the root directory of the Spring Boot project. Here’s the Dockerfile for a Spring Boot application:
@@ -39,29 +38,23 @@ Next, we’ll need to create a GitHub Action workflow file. This file should be 
 \> Create a new file in .github/workflows directory with the name github_action_continous_integration.yml.
 ![github_action_workflow](images/github_action_workflow.png)
 
-### Secrets with your Docker Hub credentials.
+### Create the secrets for Docker Hub.
+We need to define secrets for Docker Hub to upload our container image.
 \> Go to Settings tab of the Repository > go to Secrets and variables > click on to Actions > Secrets Tab > Repository secrets > click on new repository secret
 ![github_action_secrets_variables](images/github_action_secrets_variables.png)
 
 \> Create Variable DOCKERHUB_USERNAME and DOCKERHUB_TOKEN
 ![github_action_secrets_DOCKERHUB_USERNAME](images/github_action_secrets_DOCKERHUB_USERNAME.png)
 
-
 \> After the github action run successful you will find the image on DockerHub (hub.docker.com)
 ![alt text](images/hubdocker_image.png)
 
-
-
-# Integrating deploy stage to GitHub actions for performing deployment of containers on Kubernetes
-
-Create kubernetes Helm chart to deploy above image and push charts to github repo.
-Helm uses a packaging format called charts, which are collections of files describing related Kubernetes resources. Charts can be packaged into versioned archives for deployment.
-
-# Integrating Deployment Stage to GitHub Actions for Kubernetes Deployment
+### Integrating Deployment Stage (Helm) to GitHub Actions for Kubernetes Deployment
 To enable the deployment of containers on Kubernetes, we will integrate a deployment stage into our GitHub Actions workflow.
 
-Create a Kubernetes Helm Chart: Develop a Helm chart to deploy the Docker image created in the previous steps. Helm uses a packaging format called charts, which are collections of files that describe related Kubernetes resources. These charts can be packaged into versioned archives for deployment.
-Push Helm Charts to GitHub Repository: Once the Helm chart is created, push the charts to the GitHub repository for version control and easy access.
+Develop a Helm chart to deploy the Docker image created in the previous steps. Helm uses a packaging format called charts, which are collections of files that describe related Kubernetes resources. These charts can be packaged into versioned archives for deployment.
+
+Once the Helm chart is created, push the charts to the GitHub repository for version control and easy access.
 
 \> On the DevOps lab we will install helm 
 Execute below commands:
@@ -97,16 +90,16 @@ ls -la
 ![k8s_create_webapp-custom_helm_template_files_1](images/k8s_create_webapp-custom_helm_template_files_1.png)
 
 
-# Setting Up Infrastructure with Terraform: EC2 Instance for Kubernetes
-
+# Setting Up Infrastructure with Terraform (EC2 Instance for Kubernetes)
 Next step, we will use Terraform to automate the creation of an EC2 instance on AWS. 
 This instance will serve as the foundation for installing and running Kubernetes with Helm, essential tools for container orchestration and management the application.
 
-\> On the DevOps lab, we are install Terraform > ensure Terraform is installed
-
+\> On the DevOps lab, we are install Terraform
 ```bash
+# check Terraform is installed
 terraform --version
 
+# Install Terraform
 wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install terraform
@@ -118,13 +111,11 @@ sudo apt update && sudo apt install terraform
 ### Configure AWS Credentials - Set up your AWS credentials to allow Terraform to interact with your AWS account (IAM user, accesskey and secret key).
 ### In AWS 
 \> IAM > Users > click on add user > give a username > click next > select Attach policies directly > select AdministratorAccess below >> click on next > click on create user.
-
 ![aws_create_iam_1](images/aws_create_iam_1.png)
 ![aws_create_iam_2](images/aws_create_iam_2.png)
 
 Now lets attach access key and secret key to the user.
-
-Click on username > click on security credentials > Select Access keys> click on create access key
+Click on username > click on security credentials > select Access keys > click on create access key
 ![aws_create_access_key_1](images/aws_create_access_key_1.png)
 
 \> select Command Line Interface (CLI)
@@ -151,7 +142,7 @@ resource "aws_launch_configuration" "aws_autoscale_conf" {
 
 ```
 
-\> Initialize and Apply Terraform Configuration > Run terraform init to initialize the working directory containing the configuration files > Execute terraform apply to create the EC2 instance.
+\> Initialize and Apply Terraform Configuration > run terraform init to initialize the working directory containing the configuration files > execute terraform apply to create the EC2 instance.
 ```bash
 mkdir aws_infra
 cd aws_infra
@@ -159,22 +150,20 @@ vim aws_infraaas.tf
 terraform init
 terraform apply
 ```
-
 ![aws_terrafrom_init_1](images/aws_terrafrom_init_1.png)
 
 ![aws_terrafrom_apply_1](images/aws_terrafrom_apply_1.png)
 
-# ACHTUNG HIER GEHT ES WEITER!!!!!!!!!!!!!!!!!!!
 
 \> Connect to the EC2 instance, we are create 
 ![ec2_instances_from_terraform](images/ec2_instances_from_terraform.png)
 
-\> Install container on the EC2 instance
+\> Install containerd on the EC2 instance
+Containerd is a container runtime managed by the Cloud Native Computing Foundation (CNCF) and specifically designed for managing the entire lifecycle of containers.
 ```bash
 sudo su -
 
 ## Install Containerd
-
 sudo wget https://raw.githubusercontent.com/lerndevops/labs/master/scripts/installContainerd.sh -P /tmp
 sudo bash /tmp/installContainerd.sh
 sudo systemctl restart containerd.service
@@ -202,7 +191,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 ![ec2_k8s_config_1](images/ec2_k8s_config_1.png)
 
-\> create kubectl network and check kube nodes exists
+\> Create kubectl network and check kube nodes exists
 ```bash
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
@@ -230,8 +219,8 @@ ssh root@localhost "date"
 ![ec2_k8s_connectivity_github_action](images/ec2_k8s_connectivity_github_action.png)
 
 
-
-\> To run the github action also in k8s in aws ec2 instance you have to add in the github action > add the variables in the github secret variable HOST(ec2 instance public ip), USERNAME(root), PASSWORD(root) and PORT(22)
+\> To run the github action also in kubernetes in AWS EC2 instance you have to add in the github action 
+\> add the variables in the github secret variable HOST(EC2 instance public ip), USERNAME(root), PASSWORD(root) and PORT(22)
 ```yaml
       - name: Executing Kubectl command on Kubernetes Server Remotely
         uses: appleboy/ssh-action@v0.1.10
@@ -248,13 +237,17 @@ ssh root@localhost "date"
            helm list -A
            kubectl get all
 ```
+\> Select the IP from your EC2 instance
 ![aws_ec2_ip](images/aws_ec2_ip.png)
 
+\> This are all variables for the github action
 ![github_action_secrets_variables_with_ec2](images/github_action_secrets_variables_with_ec2.png)
 
-
-\> the kubernetes services are created 
+\> The kubernetes services are created 
 ![ec2_k8s_service_create](images/ec2_k8s_service_create.png)
 
 ![k8s_sercie_webapp-custom_running](images/k8s_sercie_webapp-custom_running.png)
 
+
+
+The project has been deployed. The infrastructure with Kubernetes is set up for scalability, and changes to the web application are automatically deployed through the pipeline...
